@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using DataLayer.Model
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,45 +20,64 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE="/>
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="icon" href="~/images/icon.png"/>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">M.S  Primo</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="navbar-collapse collapse d-md-inline-flex flex-md-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Start</a>
                         </li>
+                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Schip</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Ship">Schip</a>
                         </li>
+                        @*
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Fotoalbums</a>
                         </li>
+                        *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Crew</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Crew">Crew</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Stage</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Internship">Stage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Verbouwingen</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Rebuilding">Verbouwingen</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Beginners</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Beginner">Beginners</a>
                         </li>
+                        @*
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Lading</a>
                         </li>
+                        *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Contact</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="dropdown">
+                                <a asp-area="" asp-controller="Admin" asp-action="Index" data-toggle="dropdown" class="dropdown-toggle nav-link text-dark">
+                                    Admin
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Instellingen</a></li>
+                                    <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Logout">Uitloggen</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -69,7 +92,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Website - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - M.S. Primo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

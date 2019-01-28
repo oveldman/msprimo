@@ -17,7 +17,37 @@ namespace Website.Controllers
             return View();
         }
 
+        public IActionResult Ship()
+        {
+            return View();
+        }
+
+        public IActionResult Crew()
+        {
+            return View();
+        }
+
+        public IActionResult Internship()
+        {
+            return View();
+        }
+
+        public IActionResult Rebuilding()
+        {
+            return View();
+        }
+
+        public IActionResult Beginner()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
         {
             return View();
         }
