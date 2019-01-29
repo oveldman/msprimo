@@ -1,5 +1,10 @@
-﻿@{
+﻿@model Website.Models.Admin.StoryViewModel
+@using DataLayer.Model
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
 }
 
 <div class="text-center content">
@@ -10,5 +15,75 @@
         Met ons motorschip “Primo” vervoeren wij droge lading, zoals aluminium, coils, petroleum cokes
         , zout, grind en graan, over de Europerse binnenwateren.
     </p>
-    <p><b>De schippersvrouww verhaalt: </b></p>
+    <p><b>De schippersvrouw verhaalt: </b></p>
+    
+    <hr/>
+    <div class="text-left">
+        @foreach (var story in Model.Stories)
+        {
+            if(SignInManager.IsSignedIn(User))
+             {
+                 <p>
+                     <a asp-controller="Admin" asp-action="EditStory" asp-route-id="@story.ID"><img src="~/images/edit.png" height="25px" alt="edit"></a>
+                     <a asp-controller="Admin" asp-action="DeleteConfirmStory" asp-route-id="@story.ID"><img src="~/images/delete.png" height="25px" alt="delete"></a>
+                 </p>
+             }
+            <p>@Model.CultureFormat.GetDayName(story.Published.DayOfWeek) 
+                @story.Published.Day 
+                @Model.CultureFormat.GetMonthName(story.Published.Month):</p>
+                                                                         
+            @Html.Raw(story.Message)
+            <hr/>
+        }
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 d-flex">
+                <nav class="nav">
+                    <ul class="pagination mx-auto">
+
+                        @{ int previousIndex = Model.CurrentPage - 1; }
+
+                        <li class="page-item @if (previousIndex < 1)
+                                             {
+                                                 <text>disabled</text>
+                                             }"><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@previousIndex">vorige</a></li>
+
+                        @{
+                            for (var i = 4; i > 0; i--)
+                            {
+                                int currentPrevIndex = Model.CurrentPage - i;
+                                if (currentPrevIndex < 1)
+                                {
+                                    continue;
+                                }
+                                <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@currentPrevIndex">@currentPrevIndex</a></li>
+                            }
+                        }
+
+                        <li class="page-item active"><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@Model.CurrentPage">@Model.CurrentPage<span class="sr-only">(current)</span></a></li>
+
+                        @{
+                            for (var i = 1; i < 4; i++)
+                            {
+                                int currentNextIndex = Model.CurrentPage + i;
+                                if (currentNextIndex > Model.TotalPages)
+                                {
+                                    break;
+                                }
+                                <li class="page-item"><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@currentNextIndex">@currentNextIndex</a></li>
+                            }
+                        }
+
+                        @{ int nextIndex = Model.CurrentPage + 1; }
+
+                        <li class="page-item @if (nextIndex > Model.TotalPages)
+                                             {
+                                                 <text>disabled</text>
+                                             }"><a class="page-link" asp-controller="Home" asp-action="Index" asp-route-page="@nextIndex">volgende</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
 </div>

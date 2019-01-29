@@ -1,0 +1,14 @@
+@model Website.Models.Admin.StoryViewModel
+
+@{
+    ViewBag.Title = "verwijderen";
+    Layout = "_Layout";
+}
+
+<div class="text-center content">
+    <p>Weet u zeker dat u deze bericht wilt verwijderen?</p>
+    <hr/>
+    @Html.Raw(@Model.Stories[0].Message)
+    <hr/>
+    <a type="button" class="btn" asp-controller="Admin" asp-action="DeleteStory" asp-route-id="@Model.Stories[0].ID">verwijder bericht</a>
+</div>
